@@ -608,6 +608,11 @@ void flecs_emit_forward_id(
         return;
     }
 
+    ecs_id_t prev_id = it->ids[0];
+    ecs_id_t prev_src = it->sources[0];
+    ecs_id_t prev_event_id = it->event_id;
+    int32_t prev_sizes = it->sizes[0];
+
     it->ids[0] = id;
     it->sources[0] = tgt;
     it->event_id = id;
@@ -674,6 +679,10 @@ void flecs_emit_forward_id(
         }
     }
 
+    it->ids[0] = prev_id;
+    it->sources[0] = prev_src;
+    it->event_id = prev_event_id;
+    ECS_CONST_CAST(int32_t*, it->sizes)[0] = prev_sizes;
     it->up_fields = 0;
 }
 
